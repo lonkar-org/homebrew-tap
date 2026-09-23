@@ -13,22 +13,22 @@ class TmuxCompanion < Formula
   on_macos do
     on_arm do
       url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-aarch64-apple-darwin.tar.gz"
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      sha256 "10442208c4d5daf3fa22bec88a3051d0655d32c5e869891569428af5a334704a"
     end
     on_intel do
       url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-x86_64-apple-darwin.tar.gz"
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      sha256 "9465149e7aa221f30d38c4efec5471e2561bebab1fb83990d1a8821db4eb2936"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-aarch64-unknown-linux-musl.tar.gz"
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      sha256 "8bb49bb6d21ffb58af2a1d75eac8cebedafec068809a9ae7ffe50cf5ddae13e8"
     end
     on_intel do
       url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+      sha256 "a7232961f094e72ad518fed4ac6906e03258a4d30adc78b7624da1a5710a1b5b"
     end
   end
 
