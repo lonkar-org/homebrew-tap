@@ -1,6 +1,9 @@
 # lonkar-org/tap
 
-Homebrew formulae for the tools in this org. One of them so far.
+Homebrew formulae for the tools in this org. One of them so far. The repository
+is called `homebrew-tap` because that is the name brew expands `lonkar-org/tap`
+into, and a repository called `tap` would give you a clone failure with no hint
+in it.
 
 ```sh
 brew tap lonkar-org/tap
@@ -63,8 +66,8 @@ The job authenticates with a secret named `TAP_TOKEN`, set on the
 is scoped to the repository it runs in and cannot push here, which is the whole
 reason the secret exists.
 
-Make it a fine-grained personal access token, with this repository as its only
-resource and `Contents: read and write` as its only permission, then:
+Make it a fine-grained personal access token, with this repository as its
+only resource and `Contents: read and write` as its only permission, then:
 
 ```sh
 gh secret set TAP_TOKEN --repo lonkar-org/tmux-companion
