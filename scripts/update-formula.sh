@@ -6,11 +6,12 @@
 #          <checksums.txt>  the file published with that release
 #          [formula]        default Formula/tmux-companion.rb
 #
-# Rewrites the `version` line and the four `sha256` lines, matching each
-# checksum to the `url` line above it by target triple. Every one of the four
-# targets has to be in checksums.txt or the script stops without writing, so a
-# release that only half uploaded cannot leave two real checksums and two
-# zeros in the formula.
+# Rewrites the four `url` lines and the four `sha256` lines, matching each
+# checksum to the url above it by target triple. Every one of the four targets
+# has to be in checksums.txt or the script stops without writing, so a release
+# that only half uploaded cannot leave two real checksums and two zeros in the
+# formula. The formula carries no `version` line, because brew reads the version
+# out of the url and `brew audit` calls the second copy redundant.
 #
 # tmux-companion's release workflow runs this after the publish job. Run it by
 # hand the same way when a release predates the automation:
@@ -23,13 +24,11 @@ TAG=${1:?usage: update-formula.sh <tag> <checksums.txt> [formula]}
 SUMS=${2:?usage: update-formula.sh <tag> <checksums.txt> [formula]}
 FORMULA=${3:-Formula/tmux-companion.rb}
 
+BASE="https://github.com/lonkar-org/tmux-companion/releases/download"
 TARGETS="aarch64-apple-darwin x86_64-apple-darwin aarch64-unknown-linux-musl x86_64-unknown-linux-musl"
 
 [ -f "$SUMS" ]    || { echo "no checksums file at $SUMS" >&2; exit 1; }
 [ -f "$FORMULA" ] || { echo "no formula at $FORMULA" >&2; exit 1; }
-
-# The tag carries the leading v, the formula's version does not.
-VERSION=${TAG#v}
 
 # Checked before anything is written. A missing target here means the release
 # is incomplete, and half a formula is worse than the placeholder.
@@ -42,7 +41,7 @@ done
 tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT
 
-awk -v version="$VERSION" -v tag="$TAG" -v sums="$SUMS" '
+awk -v tag="$TAG" -v base="$BASE" -v sums="$SUMS" '
 BEGIN {
   # sha256sum writes "<sum>  <file>" and the release strips the ./ prefix, so
   # split on whitespace rather than counting spaces.
@@ -55,18 +54,16 @@ BEGIN {
   }
   close(sums)
 }
-# The version line, placeholder marker and all.
-/^[ \t]*version "/ {
-  sub(/version "[^"]*".*$/, "version \"" version "\"")
-  print; next
-}
-# Remember which target the url above this sha256 line is for.
+# The url carries the old tag twice, so it gets rebuilt rather than patched,
+# and the target triple in it says which checksum the next line wants.
 /^[ \t]*url "/ {
-  # The url interpolates #{version}, so the triple is the only stable thing to
-  # match on, and the asset name gets rebuilt from the tag below.
   pending = ""
-  if (match($0, /(aarch64|x86_64)-(apple-darwin|unknown-linux-musl)/))
+  if (match($0, /(aarch64|x86_64)-(apple-darwin|unknown-linux-musl)/)) {
     pending = substr($0, RSTART, RLENGTH)
+    indent = $0; sub(/[^ \t].*$/, "", indent)
+    $0 = indent "url \"" base "/" tag "/tmux-companion-" tag "-" pending ".tar.gz\""
+    urls++
+  }
   print; next
 }
 /^[ \t]*sha256 "/ && pending != "" {
@@ -80,8 +77,9 @@ BEGIN {
 }
 { print }
 END {
-  if (filled != 4) {
-    print "update-formula.sh: filled " filled " of 4 sha256 lines" > "/dev/stderr"
+  if (urls != 4 || filled != 4) {
+    print "update-formula.sh: rewrote " urls " of 4 urls and " filled \
+          " of 4 sha256 lines" > "/dev/stderr"
     exit 1
   }
 }

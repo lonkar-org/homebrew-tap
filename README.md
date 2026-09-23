@@ -7,8 +7,13 @@ in it.
 
 ```sh
 brew tap lonkar-org/tap
+brew trust lonkar-org/tap
 brew install tmux-companion
 ```
+
+Homebrew 7 refuses to load a formula from a tap you haven't trusted, and the
+error it prints names the `brew trust` command, so skipping that line costs you
+one error message rather than a puzzle.
 
 That downloads the release archive for your machine, checks it against the
 sha256 in the formula, puts `tmux-companion` on PATH and installs the manual
@@ -21,10 +26,10 @@ costs one process spawn per refresh instead of five. It binds no keys and sets
 no tmux options on install, so nothing in your config changes until you put a
 line there yourself.
 
-**No release is published yet**, and until the first tag the formula carries a
-placeholder version and four sha256 lines of sixty-four zeros, so `brew install
-tmux-companion` will fail on the checksum. That's the failure I'd rather
-have than a formula that installs something nobody verified.
+**No release is published yet**, so until the first tag the formula points at a
+`v0.1.0` that doesn't exist and carries four sha256 lines of sixty-four zeros,
+and `brew install tmux-companion` fails on the download. That's the failure I'd
+rather have than a formula that installs something nobody verified.
 
 ## Upgrading and removing
 
@@ -40,8 +45,10 @@ Saved layouts in `~/.local/state/tmux-companion` and the config in
 
 tmux-companion's release workflow has a job that runs after the release is
 published: it checks this repository out, downloads `checksums.txt` from the
-release, runs `scripts/update-formula.sh`, and commits the new version and the
-four sha256 values to `main`. Four archives, one per target, macOS on Apple
+release, runs `scripts/update-formula.sh`, and commits the four rewritten urls and
+their sha256 values to `main`. The formula has no `version` line of its own,
+since brew reads the version out of the url and `brew audit` calls a second
+copy redundant. Four archives, one per target, macOS on Apple
 silicon and on Intel and Linux on ARM and on x86_64, with the two Linux builds
 static against musl so one binary runs on any distribution.
 
@@ -51,7 +58,7 @@ failed:
 ```sh
 gh release download v0.1.0 --repo lonkar-org/tmux-companion --pattern checksums.txt
 ./scripts/update-formula.sh v0.1.0 checksums.txt
-brew style Formula/tmux-companion.rb
+brew style Formula/tmux-companion.rb && brew audit --formula lonkar-org/tap/tmux-companion
 git commit -am "tmux-companion 0.1.0"
 ```
 

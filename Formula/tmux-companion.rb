@@ -1,33 +1,33 @@
-# The version and the four sha256 values below are rewritten by
+# The four url lines and the four sha256 lines below are rewritten by
 # scripts/update-formula.sh, which tmux-companion's release workflow runs after
-# it publishes a release. Sixty-four zeros in a sha256 line, or
-# PLACEHOLDER-UNTIL-FIRST-RELEASE beside the version, mean no release has filled
-# that line in yet, and `brew install` fails the checksum rather than installing
-# something nobody verified.
+# it publishes a release. Sixty-four zeros in a sha256 line mean no release has
+# filled that line in yet, so `brew install` fails the checksum rather than
+# installing something nobody verified. The version comes from the url, which is
+# what `brew audit` wants: a `version` line beside these urls is redundant with
+# the tag in them.
 class TmuxCompanion < Formula
   desc "One daemon behind the tmux status bar, the pickers and the sessions"
   homepage "https://github.com/lonkar-org/tmux-companion"
-  version "0.1.0" # PLACEHOLDER-UNTIL-FIRST-RELEASE
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v#{version}/tmux-companion-v#{version}-aarch64-apple-darwin.tar.gz"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-aarch64-apple-darwin.tar.gz"
       sha256 "0000000000000000000000000000000000000000000000000000000000000000"
     end
     on_intel do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v#{version}/tmux-companion-v#{version}-x86_64-apple-darwin.tar.gz"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-x86_64-apple-darwin.tar.gz"
       sha256 "0000000000000000000000000000000000000000000000000000000000000000"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v#{version}/tmux-companion-v#{version}-aarch64-unknown-linux-musl.tar.gz"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-aarch64-unknown-linux-musl.tar.gz"
       sha256 "0000000000000000000000000000000000000000000000000000000000000000"
     end
     on_intel do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v#{version}/tmux-companion-v#{version}-x86_64-unknown-linux-musl.tar.gz"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.1.0/tmux-companion-v0.1.0-x86_64-unknown-linux-musl.tar.gz"
       sha256 "0000000000000000000000000000000000000000000000000000000000000000"
     end
   end
