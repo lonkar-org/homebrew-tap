@@ -12,23 +12,23 @@ class TmuxCompanion < Formula
 
   on_macos do
     on_arm do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.4.0/tmux-companion-v0.4.0-aarch64-apple-darwin.tar.gz"
-      sha256 "8f5c4ef32519fa391eaad7d62daec3e9f71eb032296ba6bff39eec9a3920eadb"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.5.1/tmux-companion-v0.5.1-aarch64-apple-darwin.tar.gz"
+      sha256 "71b3dd44f2dc4e83256d7cbff40e040b2480ac0d8f61c26bc27ffb761278f8c8"
     end
     on_intel do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.4.0/tmux-companion-v0.4.0-x86_64-apple-darwin.tar.gz"
-      sha256 "80ba6d68b389070171dcb6b686b4452b6aee4c4618ef70f17a48338bd6b94c3b"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.5.1/tmux-companion-v0.5.1-x86_64-apple-darwin.tar.gz"
+      sha256 "008f61ff4e30c655b912620117550ef0b49c7245fd40fb06cd41cb67866bb99b"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.4.0/tmux-companion-v0.4.0-aarch64-unknown-linux-musl.tar.gz"
-      sha256 "d62e725715e62dc6a990e8bdc7dc3830695442db2f54565a63611a6b41c11cf9"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.5.1/tmux-companion-v0.5.1-aarch64-unknown-linux-musl.tar.gz"
+      sha256 "eb4422172451428cb303ade4d5add457519e25d7f9e5fcd591c9a2941bc1b343"
     end
     on_intel do
-      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.4.0/tmux-companion-v0.4.0-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "b7cf1b92ec47420c59f8df650ea52619a350bb1a1e153bd32e0c466378c4e7ce"
+      url "https://github.com/lonkar-org/tmux-companion/releases/download/v0.5.1/tmux-companion-v0.5.1-x86_64-unknown-linux-musl.tar.gz"
+      sha256 "01d4289e773e2f329e45a3789f7ed8b0edc9b2d470670e908c0ed3ca7b62048f"
     end
   end
 
